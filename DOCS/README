@@ -1,6 +1,8 @@
 # EEPROM-Programmer
 EEPROM Programmer built with the GPIO Device framework for the BeagleBone Black. 
 
+Album with pictures of hardware used: https://imgur.com/a/81xC4c5
+
 --ABOUT
 
 The hardware being used is a AT28C16 (http://cva.stanford.edu/classes/cs99s/datasheets/at28c16.pdf) and uses a serial loading
@@ -9,9 +11,9 @@ accommodate any EEPROM that uses serial-loading. Specifically, any hardware that
 by this program.
 
 This program uses the BBB GPIO Device framework and uses 7 pins in total.
-  - 3 GPIO pins for the Data clear, clock, and data pins.
-  - 3 GPIO pins for the Address clear, clock, and data pins.
-  - 1 GPIO pin for the Write pin which locks the Data in the bit Pattern dictated by the address
+  - 3 GPIO pins for the Data register's clear(grey), clock(white), and data(blue) pins.
+  - 3 GPIO pins for the Address registers;s clear(grey), clock(white), and data(blue) pins.
+  - 1 GPIO pin for the Write(yellow) pin which locks the Data in the bit Pattern dictated by the address
 
 The pins that are to be used can be input in the driver.cpp when constructing the Prog objects. A data Prog object and a address
 Prog object, GPIO write pin must also be specified.
@@ -47,11 +49,11 @@ In this file you will see a line like this:
 
 ##10 dtb=am335x-boneblack-emmc-overlay.dtb
 
-Uncomment the second line here. Make sure that only this line is ucommented. If a different device-overlay is disabled
+Uncomment the second line here. Make sure that only this line is ucommented.
 Uncommenting this device-overlay will free up pins used by the HDMI. If you uncomment this line you will not be able to use
 HDMI capabilities.
 
-If you uncomment the device-overlay that disabled the onbared eMMC memory, you device will not boot and will have to be boot
+If you uncomment the device-overlay that disables the onboard eMMC memory, you device will not boot and will have to be boot
 from an SSD.
 
 
