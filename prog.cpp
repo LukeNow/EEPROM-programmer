@@ -5,16 +5,15 @@
 
 #include "prog.h"
 
-#define HOLD_TIME 1000
-
-Prog::Prog(int clockPin, int clearPin, int dataPin) {
-    clock = new GPIO(clockPin, HOLD_TIME);
-    clear = new GPIO(clearPin, HOLD_TIME);
-    data = new GPIO(dataPin, HOLD_TIME);
+Prog::Prog(int clockPin, int clearPin, int dataPin, int bits, int holdTime) {
+    clock = new GPIO(clockPin, holdTime);
+    clear = new GPIO(clearPin, holdTime);
+    data = new GPIO(dataPin, holdTime);
+    bitNum = bits;
     initialize();
 }
 
-int Prog::write(int data, int bitNum) {
+void Prog::write(int data) {
     int maskOffset = 16 - bitNum;
     unsigned short int mask = 0x8000;
     unsigned short int setValue = 0;
@@ -32,8 +31,6 @@ int Prog::write(int data, int bitNum) {
         }
         mask >>= 1;
     }
-    
-    return 0;
 }
 
 Prog::~Prog() {
@@ -42,17 +39,16 @@ Prog::~Prog() {
     delete(data);
 }
 
-int Prog::status() {
+void Prog::status() {
     std::cout << "CLOCK -- ";
     clock->status();
     std::cout << "CLEAR -- ";
     clear->status();
     std::cout << "DATA -- ";
     data->status();
-
-    return 0;
 }
-int Prog::initialize() {
+
+void Prog::initialize() {
     clock->setDirection(OUT);
     data->setDirection(OUT);
     clear->setDirection(OUT);
@@ -60,26 +56,20 @@ int Prog::initialize() {
     clock->setValue(LOW);
     data->setValue(LOW);
     clear->setValue(HIGH);
-
-    return 0;
 }
 
-int Prog::setBit(GPIO_VALUE val) {
+void Prog::setBit(GPIO_VALUE val) {
     data->setValue(val);
 
     clock->setValue(LOW);
-    usleep(HOLD_TIME);
+    usleep(holdTime);
     clock->setValue(HIGH);
-    usleep(HOLD_TIME);
+    usleep(holdTime);
     clock->setValue(LOW);
-    
-    return 0;
 }
 
-int Prog::clearReg() {
+void Prog::clearReg() {
     clear->setValue(LOW);
-    usleep(HOLD_TIME);
+    usleep(holdTime);
     clear->setValue(HIGH); //active low
-    
-    return 0;
 }

@@ -5,6 +5,8 @@
 
 #include "prog.h"
 
+const short int MAX_ADDR = 0x07FF;
+const short int MAX_DATA = 0x00FF;
 const std::string USAGE = "USAGE: ./EEPROM-Prog [input filename]\n";
 
 int main(int argc, char** argv) {
@@ -69,10 +71,10 @@ int main(int argc, char** argv) {
     std::cout << "Beginning write . . .\n ";
 
     /* Clock, clear, and data respectively. Numbers are GPIO pin numbers. */
-    Prog addr(45, 69, 66);
-    Prog data(26, 44, 68);
+    Prog addr(45, 69, 66, 11, 1000);
+    Prog data(26, 44, 68, 8, 1000);
     
-    /* WE pin is used to pulse the EEPROM to write values from addr and data. */
+    /* WE pin is used to pulse the EEPROM to write values from addr and data. Hold time is 5000 microseconds*/
     GPIO WE(67, 5000);
     WE.setDirection(OUT); 
     WE.setValue(HIGH);   
@@ -92,8 +94,8 @@ int main(int argc, char** argv) {
         std::cout << "addr: " << addrVal;
         std::cout << " data: " << dataVal << "\n";
 
-        addr.write(addrVal, 11);
-        data.write(dataVal, 8);
+        addr.write(addrVal);
+        data.write(dataVal);
         
         WE.pulse(LOW); 
     }

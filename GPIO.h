@@ -15,19 +15,18 @@ class GPIO {
         std::string name, path;
     
     public: 
-        GPIO(int number, int hold);
-        
-        virtual int setDirection(GPIO_DIRECTION);
+        GPIO(int number, int holdTime);
+        virtual void setDirection(GPIO_DIRECTION);
         virtual GPIO_DIRECTION getDirection();
-        virtual int setValue(GPIO_VALUE);
+        virtual void setValue(GPIO_VALUE);
         virtual GPIO_VALUE getValue();
         virtual ~GPIO();
-        int status();
-        int pulse(GPIO_VALUE pulseVal);
+        void status();
+        void pulse(GPIO_VALUE pulseVal);
 
     private:
-        int exportGPIO();
-        int unexportGPIO();
+        void exportGPIO();
+        void unexportGPIO();
 
 };
 #endif

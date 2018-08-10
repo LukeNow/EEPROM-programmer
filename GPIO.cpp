@@ -18,7 +18,7 @@ GPIO::~GPIO() {
     this->unexportGPIO();
 }
 
-int GPIO::status() {
+void GPIO::status() {
     std::cout << "Status of " << name << "\n";
     if (getDirection() == 0) {
         std::cout << "\tDirection: IN\n";
@@ -33,11 +33,9 @@ int GPIO::status() {
     else {
         std::cout << "\tValue: HIGH\n";
     }
-
-    return 0;
 }
 
-int GPIO::setDirection(GPIO_DIRECTION dir) {
+void GPIO::setDirection(GPIO_DIRECTION dir) {
     std::ofstream fs;
     std::string dirPath = path + "/direction";
     fs.open(dirPath);
@@ -50,7 +48,6 @@ int GPIO::setDirection(GPIO_DIRECTION dir) {
     }
 
     fs.close();
-    return 0;
 }
 
 GPIO_DIRECTION GPIO::getDirection() {
@@ -67,17 +64,15 @@ GPIO_DIRECTION GPIO::getDirection() {
     else {
         return OUT;
     }
-    
 }
 
-int GPIO::setValue(GPIO_VALUE val) {
+void GPIO::setValue(GPIO_VALUE val) {
     std::ofstream fs;
     std::string valPath = path + "/value";
     fs.open(valPath);
 
     fs << val;
     fs.close();
-    return 0;
 }
 
 GPIO_VALUE GPIO::getValue() {
@@ -99,7 +94,7 @@ GPIO_VALUE GPIO::getValue() {
     return val;
 }
 
-int GPIO::pulse(GPIO_VALUE pulseVal) {
+void GPIO::pulse(GPIO_VALUE pulseVal) {
     if (pulseVal == 0) {
         setValue(HIGH);
         usleep(holdTime);
@@ -114,12 +109,10 @@ int GPIO::pulse(GPIO_VALUE pulseVal) {
         usleep(holdTime);
         setValue(LOW);
     }
-
-    return 0;
 }
 
 
-int GPIO::exportGPIO() {
+void GPIO::exportGPIO() {
     std::ofstream fs;
     std::string exportPath = GPIO_PATH + "export";
     fs.open(exportPath);
@@ -127,10 +120,9 @@ int GPIO::exportGPIO() {
     std::string val = std::to_string(number);
     fs << val;
     fs.close();
-    return 0;
 }
 
-int GPIO::unexportGPIO() {
+void GPIO::unexportGPIO() {
     std::ofstream fs;
     std::string unexportPath = GPIO_PATH + "unexport";
     fs.open(unexportPath);
@@ -138,8 +130,4 @@ int GPIO::unexportGPIO() {
     std::string val = std::to_string(number);
     fs << val;
     fs.close();
-    return 0;
 }
-
-
-

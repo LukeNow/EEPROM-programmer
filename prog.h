@@ -3,24 +3,23 @@
 #ifndef PROG_H
 #define PROG_H
 
-const short int MAX_ADDR = 0x07FF;
-const short int MAX_DATA = 0x00FF;
-
 class Prog {
     private:
         GPIO* clock;
         GPIO* clear;
         GPIO* data;
-    
+        int bitNum;
+        int holdTime;
+
     public:
-        Prog(int clockPin, int clearPin, int dataPin);
-        virtual int write(int data, int bitNum);
+        Prog(int clockPin, int clearPin, int dataPin, int bitNum, int holdTime);
+        virtual void write(int data);
         virtual ~Prog();
-        virtual int status();
-        int clearReg();
+        virtual void clearReg();
+        void status();
 
     private: 
-        int initialize();
-        int setBit(GPIO_VALUE val);
+        void initialize();
+        void setBit(GPIO_VALUE val);
 };
 #endif
