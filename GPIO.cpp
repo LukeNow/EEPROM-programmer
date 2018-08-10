@@ -1,34 +1,45 @@
+#include <iostream>
+#include <unistd.h>
+#include <string>
+#include <fstream>
+
 #include "GPIO.h"
 
-GPIO::GPIO(int num) {
+GPIO::GPIO(int num, int hold) {
     number = num;
-    name = "gpio" + to_string(number);
+    holdTime = hold;
+    name = "gpio" + std::to_string(number);
     path = GPIO_PATH + name;
     
     this->exportGPIO();
 }
 
+GPIO::~GPIO() {
+    this->unexportGPIO();
+}
+
 int GPIO::status() {
-    cout << "Status of " << name << endl;
+    std::cout << "Status of " << name << "\n";
     if (getDirection() == 0) {
-        cout << "\tDirection: IN\n";
+        std::cout << "\tDirection: IN\n";
     }
     else {
-        cout << "\tDirection: OUT\n";
+        std::cout << "\tDirection: OUT\n";
     }
 
     if (getValue() == 0) {
-        cout << "\tValue: LOW" << endl;
+        std::cout << "\tValue: LOW\n";
     }
     else {
-        cout << "\tValue: HIGH" << endl;
+        std::cout << "\tValue: HIGH\n";
     }
 
     return 0;
 }
+
 int GPIO::setDirection(GPIO_DIRECTION dir) {
-    ofstream fs;
-    string dirPath = path + "/direction";
+    std::ofstream fs;
+    std::string dirPath = path + "/direction";
     fs.open(dirPath);
 
     if (dir == 0) {
@@ -43,11 +54,11 @@ int GPIO::setDirection(GPIO_DIRECTION dir) {
 }
 
 GPIO_DIRECTION GPIO::getDirection() {
-    ifstream fs;
-    string dirPath = path + "/direction";
+    std::ifstream fs;
+    std::string dirPath = path + "/direction";
     fs.open(dirPath);
 
-    string dirVal;
+    std::string dirVal;
     fs >> dirVal;
     fs.close();
     if (dirVal == "in") {
@@ -60,8 +71,8 @@ GPIO_DIRECTION GPIO::getDirection() {
 }
 
 int GPIO::setValue(GPIO_VALUE val) {
-    ofstream fs;
-    string valPath = path + "/value";
+    std::ofstream fs;
+    std::string valPath = path + "/value";
     fs.open(valPath);
 
     fs << val;
@@ -70,8 +81,8 @@ int GPIO::setValue(GPIO_VALUE val) {
 }
 
 GPIO_VALUE GPIO::getValue() {
-    ifstream fs;
-    string valPath = path + "/value";
+    std::ifstream fs;
+    std::string valPath = path + "/value";
     fs.open(valPath);
     
     GPIO_VALUE val;
@@ -91,16 +102,16 @@ GPIO_VALUE GPIO::getValue() {
 int GPIO::pulse(GPIO_VALUE pulseVal) {
     if (pulseVal == 0) {
         setValue(HIGH);
-        usleep(HOLD);
+        usleep(holdTime);
         setValue(LOW);
-        usleep(HOLD);
+        usleep(holdTime);
         setValue(HIGH);
     }
     else {
         setValue(LOW);
-        usleep(HOLD);
+        usleep(holdTime);
         setValue(HIGH);
-        usleep(HOLD);
+        usleep(holdTime);
         setValue(LOW);
     }
 
@@ -109,28 +120,25 @@ int GPIO::pulse(GPIO_VALUE pulseVal) {
 
 
 int GPIO::exportGPIO() {
-    ofstream fs;
-    string exportPath = GPIO_PATH + "export";
+    std::ofstream fs;
+    std::string exportPath = GPIO_PATH + "export";
     fs.open(exportPath);
     
-    string val = to_string(number);
+    std::string val = std::to_string(number);
     fs << val;
     fs.close();
     return 0;
 }
 
 int GPIO::unexportGPIO() {
-    ofstream fs;
-    string unexportPath = GPIO_PATH + "unexport";
+    std::ofstream fs;
+    std::string unexportPath = GPIO_PATH + "unexport";
     fs.open(unexportPath);
     
-    string val = to_string(number);
+    std::string val = std::to_string(number);
     fs << val;
     fs.close();
     return 0;
-}
-GPIO::~GPIO() {
-    this->unexportGPIO();
 }
 
 

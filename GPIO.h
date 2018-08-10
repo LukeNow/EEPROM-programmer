@@ -1,26 +1,21 @@
 #ifndef GPIO_H
 #define GPIO_H
-#include<iostream>
-#include<unistd.h>
-#include<string>
-#include<fstream>
 
-using namespace std;
-
-const int HOLD = 1000; //microseconds
+#include <string>
 
 enum GPIO_DIRECTION { IN, OUT };
 enum GPIO_VALUE { LOW=0, HIGH=1 };
-using namespace std;
-const string GPIO_PATH = "/sys/class/gpio/";
+
+const std::string GPIO_PATH = "/sys/class/gpio/";
 
 class GPIO {
     private:
         int number;
-        string name, path;
+        int holdTime;
+        std::string name, path;
     
     public: 
-        GPIO(int number);
+        GPIO(int number, int hold);
         
         virtual int setDirection(GPIO_DIRECTION);
         virtual GPIO_DIRECTION getDirection();
