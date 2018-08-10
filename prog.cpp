@@ -5,11 +5,12 @@
 
 #include "prog.h"
 
-Prog::Prog(int clockPin, int clearPin, int dataPin, int bits, int holdTime) {
+Prog::Prog(int clockPin, int clearPin, int dataPin, int bits, int hold) {
     clock = new GPIO(clockPin, holdTime);
     clear = new GPIO(clearPin, holdTime);
     data = new GPIO(dataPin, holdTime);
     bitNum = bits;
+    holdTime = hold;
     initialize();
 }
 
@@ -55,7 +56,7 @@ void Prog::initialize() {
     
     clock->setValue(LOW);
     data->setValue(LOW);
-    clear->setValue(HIGH);
+    clear->setValue(HIGH); //ACTIVE LOW
 }
 
 void Prog::setBit(GPIO_VALUE val) {
@@ -71,5 +72,5 @@ void Prog::setBit(GPIO_VALUE val) {
 void Prog::clearReg() {
     clear->setValue(LOW);
     usleep(holdTime);
-    clear->setValue(HIGH); //active low
+    clear->setValue(HIGH); //ACTIVE LOW
 }
