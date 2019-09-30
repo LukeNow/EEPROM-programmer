@@ -35,14 +35,14 @@ Typing 'make' will compile the program into an executable called "EEPROM-Prog"
 
 An example is as follows:
 
-$ make
+    $ make
 
 A datafile must be passed as an arguement that has the address values and the data values that are to be programmed.
 An example of one of these files can be found in the Example_Files directory.
 
 running with the executable compiled:
 
-$ sudo ./EEPROM-Prog [datafile.txt]
+    $ sudo ./EEPROM-Prog [datafile.txt]
 
 --FREEING UP GPIO PINS THROUGH THE DEVICE-OVERLAYS
 - For 3.X Linux Kernel images for BBB
@@ -63,5 +63,5 @@ HDMI capabilities.
 If you uncomment the device-overlay that disables the onboard eMMC memory, you device will not boot and will have to be boot
 from an SSD or reinstall your image. Be careful and be sure you know what you're doing.
 
--- CONTACT
-Any question or comments can be directed to lukekryger98@gmail.com
+# CONTACT
+Any question or comments can be directed to lnowakow@eng.ucsd.edu
