@@ -2,7 +2,6 @@
 GPIO and EEPROM programming API designed for the BeagleBone Black. 
 EEPROM-Prog program uses both interfaces to program data into an EEPROM.
 
---ABOUT
 The GPIO programming interface allows for the use of GPIO pins available on the BeagleBone Black to be used in general programs. It allows for
 the changing of GPIO characterstics in your code without having to manipulate the state of the GPIO pins through the terminal by opening, writing, and
 closing device files.
@@ -28,7 +27,7 @@ also be specified. If there are not enough available GPIO pins on the BBB, a tut
 below in the README.
 
 
---COMPILING and RUNNING
+# COMPILING and RUNNING
 [WARNING] YOU MUST RUN THIS PROGRAM WITH ELEVATED PRIVILEGES
 
 Typing 'make' will compile the program into an executable called "EEPROM-Prog"
@@ -44,7 +43,7 @@ running with the executable compiled:
 
     $ sudo ./EEPROM-Prog [datafile.txt]
 
---FREEING UP GPIO PINS THROUGH THE DEVICE-OVERLAYS
+# FREEING UP GPIO PINS THROUGH THE DEVICE-OVERLAYS
 - For 3.X Linux Kernel images for BBB
       ***CAUTION YOUR BBB MIGHT NOT BOOT IF YOU DISABLE THE WRONG THINGS***
       
